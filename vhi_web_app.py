@@ -36,6 +36,20 @@ class vhi_app(server.App):
         "options": [{"label": fweek, "value": fweek} for fweek in range(1, 53)],
         "key": "fweek",
         "action_id": "update",
+     },
+     {
+        "type": "dropdown",
+        "id": "type",
+        "label": "choose type of index",
+        "options": [
+            {"label": "VHI", "value": "VHI"},
+            {"label": "TCI", "value": "TCI"},
+            {"label": "VCI", "value": "VCI"},
+            {"label": "SMT", "value": "SMT"},
+            {"label": "SMN", "value": "SMN"},
+        ],
+        "key": "type",
+        "action_id": "update",
      }
     ]
     outputs = [
@@ -74,21 +88,16 @@ class vhi_app(server.App):
 
     def getPlot(self, params):
         df = self.getData(params).set_index('week')
-        df = df[["SMN", "SMT", "VCI", "TCI", "VHI"]]
-        # filename = params["file"]
-        # year = int(params["year"])
-        # sweek = int(params["sweek"])
-        # fweek = int(params["fweek"])
-        # df = pd.read_csv("data1/" + filename, sep = ",{1} *| {1,4}", index_col = False, engine = 'python', header = 1)
-        # df = df.ix[df.year == year, ["week", "VHI"]]
-        # df = df[(df.week > sweek) & (df.week < fweek)]
+        type_ind = params["type"]
+        df = df[[type_ind]]
         plt_obj = df.plot()
-        plt_obj.set_ylabel("indexes")
-        plt_obj.set_title("vegetation indexes for chosen time period")
+        plt_obj.set_ylabel(type_ind)
+        plt_obj.set_title(type_ind + " for chosen time period")
+        plt_obj.grid()
         return plt_obj.get_figure()
 
 
-
+# TODO more lines, diff colours
 
 app = vhi_app()
 app.launch()
