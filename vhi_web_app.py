@@ -25,7 +25,7 @@ class vhi_app(server.App):
         "type": "dropdown",
         "id": "sweek",
         "label": "choose start week",
-        "options": [{"label": sweek, "value": sweek} for sweek in range(1, 53)], # fix 1981 and 2017
+        "options": [{"label": sweek, "value": sweek} for sweek in range(1, 53)],
         "key": "sweek",
         "action_id": "update",
      },
