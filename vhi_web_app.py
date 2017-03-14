@@ -84,7 +84,8 @@ class vhi_app(server.App):
         fweek = int(params["fweek"])
         df = pd.read_csv("data1/" + filename, sep = ",{1} *| {1,4}", index_col = False, engine = 'python', header = 1)
         df = df.ix[df.year == year]
-        return df[(df.week > sweek) & (df.week < fweek)]
+        df = df[(df.week > sweek) & (df.week < fweek)]
+        return df
 
     def getPlot(self, params):
         df = self.getData(params).set_index('week')
